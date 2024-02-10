@@ -46,7 +46,10 @@ async function getHtml(source: string): Promise<string | undefined> {
 }
 ```
 fetchでリスポンスを受け取る．
+
 そしてリスポンスからbodyを取得する必要があるが，C#ならreadAsBytesAsyncメソッドを使えば簡単にできるのにTypeScriptではストリームを処理する必要がある．
+
 Streamからはチャンク単位（ある一定の単位）でデータを受け取ることができる．その処理がwhile文のところ
+
 元々37-47行目の処理を使っていたが，これだと１チャンクしか読み取らないので途中までしか結果を取得できていなかった．
 while(true)でループ回してるのは良くないと思う
