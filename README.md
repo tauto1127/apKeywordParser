@@ -1,0 +1,10 @@
+https://www.ap-siken.com/keyword/_y.html
+https://www.ap-siken.com/keyword/_z.html
+https://www.ap-siken.com/keyword/tu.html
+https://www.ap-siken.com/keyword/nu.html
+https://www.ap-siken.com/keyword/ne.html
+https://www.ap-siken.com/keyword/no.html
+https://www.ap-siken.com/keyword/mu.html
+https://www.ap-siken.com/keyword/ya.html
+https://www.ap-siken.com/keyword/yo.html
+には単語がない
