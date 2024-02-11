@@ -48,24 +48,24 @@ var errors = [];
 main(undefined);
 function main(spec) {
     return __awaiter(this, void 0, void 0, function () {
-        var terms, i, _a, _b;
-        return __generator(this, function (_c) {
-            switch (_c.label) {
+        var terms, i, terms_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
                 case 0:
                     terms = [];
                     if (!(spec == undefined)) return [3 /*break*/, 6];
                     i = 0;
-                    _c.label = 1;
+                    _a.label = 1;
                 case 1:
                     if (!(i < sources.length)) return [3 /*break*/, 5];
                     console.log(sources[i]);
                     return [4 /*yield*/, getTerms(getApUrlFromPrefix(sources[i]))];
                 case 2:
-                    (_c.sent()).forEach(function (value) { return terms.push(value); });
+                    (_a.sent()).forEach(function (value) { return terms.push(value); });
                     return [4 /*yield*/, new Promise(function (resolve) { return setTimeout(resolve, interval); })];
                 case 3:
-                    _c.sent();
-                    _c.label = 4;
+                    _a.sent();
+                    _a.label = 4;
                 case 4:
                     i++;
                     return [3 /*break*/, 1];
@@ -76,13 +76,12 @@ function main(spec) {
                     }
                     writeTerms(terms);
                     return [3 /*break*/, 8];
-                case 6:
-                    _b = (_a = console).log;
-                    return [4 /*yield*/, getTerms(getApUrlFromPrefix(spec))];
+                case 6: return [4 /*yield*/, getTerms(getApUrlFromPrefix(spec))];
                 case 7:
-                    _b.apply(_a, [_c.sent()]);
+                    terms_1 = _a.sent();
+                    writeTerms(terms_1);
                     console.log(errors.length);
-                    _c.label = 8;
+                    _a.label = 8;
                 case 8: return [2 /*return*/];
             }
         });
@@ -123,7 +122,7 @@ function writeTerms(terms) {
         return __generator(this, function (_a) {
             result = "";
             console.log("結果の書き込みを開始します");
-            terms.forEach(function (value) { return result += value.name + "," + value.description + "\n"; });
+            terms.forEach(function (value) { var _a; return result += value.name + "," + ((_a = value.description) === null || _a === void 0 ? void 0 : _a.replace("\n", "")) + "\n"; });
             try {
                 fs_1.default.writeFileSync('result.txt', result);
             }
@@ -189,9 +188,13 @@ function readHtml(rawHtml, url) {
                             name = childnode.textContent;
                         }
                         if (childnode.tagName === 'DD') {
+                            var text = childnode.textContent;
+                            if (text == null)
+                                return [];
+                            var reg = new RegExp('\n', 'g');
                             termList.push({
                                 name: name,
-                                description: childnode.textContent,
+                                description: childnode.textContent.replace(/[\n\r\n]+/g, '<br>'),
                             });
                         }
                     }

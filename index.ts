@@ -30,7 +30,8 @@ async function main(spec: string | undefined) {
 		writeTerms(terms);
 
 	} else {
-		console.log(await getTerms(getApUrlFromPrefix(spec)));
+		let terms: Term[] = await getTerms(getApUrlFromPrefix(spec));
+		writeTerms(terms);
 		console.log(errors.length);
 	}
 }
@@ -54,7 +55,7 @@ async function saveRawHtml(raw: string) {
 async function writeTerms(terms: Term[]) {
 	let result: string = "";
 	console.log("結果の書き込みを開始します");
-	terms.forEach((value: Term) => result += value.name + "," + value.description + "\n");
+	terms.forEach((value: Term) => result += value.name + "," + value.description?.replace("\n","") + "\n");
 	try {
 		fs.writeFileSync('result.txt', result);
 	}catch(e) {
@@ -119,9 +120,12 @@ async function readHtml(rawHtml: string, url: string): Promise<Term[]> {
 				}
 
 				if(childnode.tagName === 'DD') {
+					var text = childnode.textContent;
+					if(text == null) return [];
+					const reg = new RegExp('\n', 'g');
 					termList.push({
 						name: name,
-						description: childnode.textContent,
+						description: childnode.textContent!.replace(/[\n\r\n]+/g, '<br>'),
 					});
 				}
 			}
